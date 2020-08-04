@@ -4,6 +4,8 @@ import { Observable } from "rxjs";
 import {
   getUserState,
   UserState,
+  ClaimsState,
+  getClaimsState,
 } from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
 import { State } from "../../../core/reducers/index";
 import { AuthActions } from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
@@ -16,11 +18,13 @@ import { Router } from "@angular/router";
 })
 export class ToolbarContainerComponent implements OnInit {
   auth$: Observable<UserState>;
+  claims$: Observable<ClaimsState>;
 
   constructor(private store: Store<State>, private router: Router) {}
 
   ngOnInit(): void {
     this.auth$ = this.store.pipe(select(getUserState));
+    this.claims$ = this.store.pipe(select(getClaimsState));
   }
 
   onLogout(): void {

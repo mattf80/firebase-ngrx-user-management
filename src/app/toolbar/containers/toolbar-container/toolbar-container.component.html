@@ -1,1 +1,5 @@
-<app-toolbar [auth]="auth$ | async" (logout)="onLogout()"></app-toolbar>
+<app-toolbar
+  [auth]="auth$ | async"
+  (logout)="onLogout()"
+  [claims]="claims$ | async"
+></app-toolbar>

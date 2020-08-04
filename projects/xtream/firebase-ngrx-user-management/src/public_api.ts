@@ -2,7 +2,7 @@
  * Public API Surface of firebase-ngrx-user-management
  */
 
-import {IUser, User} from './lib/models/auth.model';
+import { IUser, User } from "./lib/models/auth.model";
 import {
   AuthState,
   getAuthError,
@@ -35,15 +35,22 @@ import {
   isRecoverEmailOrCheckCodeLoading,
   isResetPasswordLoading,
   isResetPasswordOrCodeLoading,
-  isUserLogged
-} from './lib/reducers/index';
-import {Credentials} from './lib/models/credentials';
-import {AuthActions, CustomEmailHandlerActions, PasswordManagementActions, ProvidersManagementActions} from './lib/actions/index';
-import {State as UserState} from './lib/reducers/user.reducer';
-import {State as ProvidersState} from './lib/reducers/providers-management.reducer';
+  isUserLogged,
+  getClaimsState,
+} from "./lib/reducers/index";
+import { Credentials } from "./lib/models/credentials";
+import {
+  AuthActions,
+  CustomEmailHandlerActions,
+  PasswordManagementActions,
+  ProvidersManagementActions,
+} from "./lib/actions/index";
+import { State as UserState } from "./lib/reducers/user.reducer";
+import { State as ProvidersState } from "./lib/reducers/providers-management.reducer";
+import { State as ClaimsState } from "./lib/reducers/claims-management.reducer";
 
-export * from './lib/firebase-ngrx-user-management.service';
-export * from './lib/firebase-ngrx-user-management.module';
+export * from "./lib/firebase-ngrx-user-management.service";
+export * from "./lib/firebase-ngrx-user-management.module";
 
 export {
   AuthState,
@@ -55,6 +62,8 @@ export {
   PasswordManagementActions,
   ProvidersManagementActions,
   UserState,
+  getClaimsState,
+  ClaimsState,
   getChangePasswordStatus,
   isUserLogged,
   getUser,
@@ -86,5 +95,5 @@ export {
   CustomEmailHandlerActions,
   getEmailVerifiedStatus,
   getVerifyResetPasswordProcedure,
-  getPasswordResetStatus
+  getPasswordResetStatus,
 };

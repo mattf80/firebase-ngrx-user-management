@@ -12,6 +12,8 @@ import {
   take,
   tap,
   withLatestFrom,
+  concatMapTo,
+  flatMap,
 } from "rxjs/operators";
 import * as userActions from "../actions/auth.actions";
 import { from, Observable, of, zip, combineLatest } from "rxjs";
@@ -21,6 +23,7 @@ import { SetProviders } from "../actions/providers-management.actions";
 import { Action } from "@ngrx/store";
 import UserCredential = auth.UserCredential;
 import { setClaims, resetClaims } from "../actions/claims-management.actions";
+import { ClaimsManagementActions } from "../actions";
 
 const PROVIDERS_MAP = {};
 PROVIDERS_MAP[auth.FacebookAuthProvider.FACEBOOK_SIGN_IN_METHOD] = "facebook";
@@ -43,16 +46,13 @@ export class LoginEffects {
           if (authData) {
             /// User logged in
             console.debug("USER", authData);
-            authData
-              .getIdTokenResult()
-              .then((token) => setClaims({ claims: token.claims }));
-            return zip(
-              from(authData.getIdToken(true)),
-              from(authData.getIdTokenResult(true))
-            ).pipe(
-              switchMap(([res, tokenResult]) => {
+            // authData
+            //   .getIdTokenResult()
+            //   .then((token) => setClaims({ claims: token.claims }));
+            return zip(from(authData.getIdTokenResult(true))).pipe(
+              switchMap(([tokenResult]) => {
                 console.debug("providers found", authData.providerData);
-                console.debug("res", res);
+                // console.debug("res", res);
                 const claims = tokenResult.claims;
                 const providers = authData.providerData.reduce(
                   (prev, current) => {
@@ -151,7 +151,6 @@ export class LoginEffects {
     }),
     map((authData) => {
       console.log("logout effect");
-
       return new userActions.NotAuthenticated();
     })
   );

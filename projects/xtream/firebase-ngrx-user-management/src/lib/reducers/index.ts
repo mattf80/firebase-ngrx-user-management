@@ -33,6 +33,10 @@ export const getAuthState: MemoizedSelector<
 > = createFeatureSelector<AuthState>("auth");
 
 export const getUserState = createSelector(getAuthState, (state) => state.user);
+export const getClaimsState = createSelector(
+  getAuthState,
+  (state) => state.claims
+);
 
 export const isAuthLoading = createSelector(
   getAuthState,
@@ -46,6 +50,11 @@ export const isUserLogged = createSelector(
 );
 
 export const getUser = createSelector(getAuthState, (state) => state.user.user);
+
+export const getClaims = createSelector(
+  getClaimsState,
+  (state) => state.claims
+);
 
 export const getAuthError = createSelector(
   getAuthState,
