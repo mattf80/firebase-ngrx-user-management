@@ -34,6 +34,7 @@
     "@ngrx/entity": "^9.0.0",
     "@ngrx/store": "^9.0.0",
     "@ngrx/store-devtools": "^9.0.0",
+    "matt-ngrx-firebase-auth": "file:C:/Users/frowe/dev/firebase-ngrx-user-management/projects/xtream/firebase-ngrx-user-management",
     "core-js": "^3.2.1",
     "firebase": "^7.8.0",
     "rxjs": "~6.5.4",

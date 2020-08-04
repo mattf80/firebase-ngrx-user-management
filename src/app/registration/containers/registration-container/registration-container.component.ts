@@ -1,31 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthActions, AuthState} from '@xtream/firebase-ngrx-user-management';
-import {select, Store} from '@ngrx/store';
-import {Credentials} from '@xtream/firebase-ngrx-user-management';
-import {Observable} from 'rxjs';
-import {getAuthError, isAuthSuccess} from '@xtream/firebase-ngrx-user-management';
+import { Component, OnInit } from "@angular/core";
+import {
+  AuthActions,
+  AuthState,
+} from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
+import { select, Store } from "@ngrx/store";
+import { Credentials } from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
+import { Observable } from "rxjs";
+import {
+  getAuthError,
+  isAuthSuccess,
+} from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
 
 @Component({
-  selector: 'app-registration-container',
-  templateUrl: './registration-container.component.html',
-  styleUrls: ['./registration-container.component.css']
+  selector: "app-registration-container",
+  templateUrl: "./registration-container.component.html",
+  styleUrls: ["./registration-container.component.css"],
 })
 export class RegistrationContainerComponent implements OnInit {
-
   public error$: Observable<{ code: string }>;
   public success$: Observable<boolean>;
 
   constructor(private store: Store<AuthState>) {
-    this.error$ = this.store.pipe(
-      select(getAuthError)
-    );
-    this.success$ = this.store.pipe(
-      select(isAuthSuccess)
-    );
+    this.error$ = this.store.pipe(select(getAuthError));
+    this.success$ = this.store.pipe(select(isAuthSuccess));
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onGoogleLogin(): void {
     this.store.dispatch(new AuthActions.GoogleLogin());

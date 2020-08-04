@@ -1,14 +1,21 @@
-import * as fromUser from './user.reducer';
-import * as fromChangePassword from './password-management.reducer';
-import * as fromProviders from './providers-management.reducer';
-import * as fromCustomEmailHandler from './custom-email-handler.reducer';
+import * as fromUser from "./user.reducer";
+import * as fromChangePassword from "./password-management.reducer";
+import * as fromProviders from "./providers-management.reducer";
+import * as fromClaims from "./claims-management.reducer";
+import * as fromCustomEmailHandler from "./custom-email-handler.reducer";
 
-import {ActionReducerMap, createFeatureSelector, createSelector, MemoizedSelector} from '@ngrx/store';
+import {
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector,
+} from "@ngrx/store";
 
 export interface AuthState {
   user: fromUser.State;
   changePassword: fromChangePassword.State;
   providers: fromProviders.State;
+  claims: fromClaims.State;
   customEmailHandler: fromCustomEmailHandler.State;
 }
 
@@ -16,171 +23,178 @@ export const reducers: ActionReducerMap<AuthState> = {
   user: fromUser.reducer,
   changePassword: fromChangePassword.reducer,
   providers: fromProviders.reducer,
-  customEmailHandler: fromCustomEmailHandler.reducer
+  claims: fromClaims.reducer,
+  customEmailHandler: fromCustomEmailHandler.reducer,
 };
 
-export const getAuthState: MemoizedSelector<object, AuthState> = createFeatureSelector<AuthState>('auth');
+export const getAuthState: MemoizedSelector<
+  object,
+  AuthState
+> = createFeatureSelector<AuthState>("auth");
 
-export const getUserState = createSelector(
-  getAuthState,
-  state => state.user
-);
+export const getUserState = createSelector(getAuthState, (state) => state.user);
 
 export const isAuthLoading = createSelector(
   getAuthState,
-  state => state.user.loading
+  (state) => state.user.loading
 );
 
 export const isUserLogged = createSelector(
   getAuthState,
-  state => state.user.loggedIn && state.user.user && state.user.user.emailVerified
+  (state) =>
+    state.user.loggedIn && state.user.user && state.user.user.emailVerified
 );
 
-export const getUser = createSelector(
-  getAuthState,
-  state => state.user.user
-);
+export const getUser = createSelector(getAuthState, (state) => state.user.user);
 
 export const getAuthError = createSelector(
   getAuthState,
-  state => state.user.error
+  (state) => state.user.error
 );
 
 export const isAuthSuccess = createSelector(
   getAuthState,
-  state => state.user.success
+  (state) => state.user.success
 );
 
 export const getChangePasswordStatus = createSelector(
   getAuthState,
-  state => state.changePassword
+  (state) => state.changePassword
 );
 
 export const getUserProvidersState = createSelector(
   getAuthState,
-  state => state.providers
+  (state) => state.providers
 );
 
 export const getUserProviders = createSelector(
   getAuthState,
-  state => state.providers.providers
+  (state) => state.providers.providers
 );
 
 export const getProvidersRequestStatus = createSelector(
   getAuthState,
-  state => {
+  (state) => {
     return {
       loading: state.providers.loading,
       error: state.providers.error,
-      success: state.providers.success
+      success: state.providers.success,
     };
   }
 );
 
 export const getCustomEmailHandlerRequestStatus = createSelector(
   getAuthState,
-  state => {
+  (state) => {
     return {
       emailVerified: {
         loading: state.customEmailHandler.emailVerified.loading,
         error: state.customEmailHandler.emailVerified.error,
-        success: state.customEmailHandler.emailVerified.success
-      }
+        success: state.customEmailHandler.emailVerified.success,
+      },
     };
   }
 );
 
 export const getEmailVerifiedStatus = createSelector(
   getAuthState,
-  state => state.customEmailHandler.emailVerified
+  (state) => state.customEmailHandler.emailVerified
 );
 
 export const getPasswordResetStatus = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword
+  (state) => state.customEmailHandler.resetPassword
 );
 
 export const getVerifyResetPasswordProcedure = createSelector(
   getAuthState,
-  state => state.customEmailHandler.passwordResetCode
+  (state) => state.customEmailHandler.passwordResetCode
 );
 
 export const getEmailVerifiedError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.emailVerified.error
+  (state) => state.customEmailHandler.emailVerified.error
 );
 
 export const isEmailVerifiedLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.emailVerified.loading
+  (state) => state.customEmailHandler.emailVerified.loading
 );
 
 export const getPasswordResetCodeError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.passwordResetCode.error
+  (state) => state.customEmailHandler.passwordResetCode.error
 );
 
 export const isPasswordResetCodeLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.passwordResetCode.loading
+  (state) => state.customEmailHandler.passwordResetCode.loading
 );
 
 export const getPasswordResetCodeEmail = createSelector(
   getAuthState,
-  state => state.customEmailHandler.passwordResetCode.email
+  (state) => state.customEmailHandler.passwordResetCode.email
 );
 
 export const getResetPasswordError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword.error
+  (state) => state.customEmailHandler.resetPassword.error
 );
 
 export const isResetPasswordLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword.loading
+  (state) => state.customEmailHandler.resetPassword.loading
 );
 
 export const getCheckCodeError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.checkCode.error
+  (state) => state.customEmailHandler.checkCode.error
 );
 
 export const isCheckCodeLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.checkCode.loading
+  (state) => state.customEmailHandler.checkCode.loading
 );
 
 export const getRecoverEmailError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.recoverEmail.error
+  (state) => state.customEmailHandler.recoverEmail.error
 );
 
 export const isRecoverEmailLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.recoverEmail.loading
+  (state) => state.customEmailHandler.recoverEmail.loading
 );
 
 export const getResetPasswordOrCodeError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword.error || state.customEmailHandler.passwordResetCode.error
+  (state) =>
+    state.customEmailHandler.resetPassword.error ||
+    state.customEmailHandler.passwordResetCode.error
 );
 
 export const getResetPasswordSuccess = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword.success
+  (state) => state.customEmailHandler.resetPassword.success
 );
 
 export const isResetPasswordOrCodeLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.resetPassword.loading || state.customEmailHandler.passwordResetCode.loading
+  (state) =>
+    state.customEmailHandler.resetPassword.loading ||
+    state.customEmailHandler.passwordResetCode.loading
 );
 
 export const getRecoverEmailOrCheckCodeError = createSelector(
   getAuthState,
-  state => state.customEmailHandler.recoverEmail.error || state.customEmailHandler.checkCode.error
+  (state) =>
+    state.customEmailHandler.recoverEmail.error ||
+    state.customEmailHandler.checkCode.error
 );
 
 export const isRecoverEmailOrCheckCodeLoading = createSelector(
   getAuthState,
-  state => state.customEmailHandler.recoverEmail.loading || state.customEmailHandler.checkCode.loading
+  (state) =>
+    state.customEmailHandler.recoverEmail.loading ||
+    state.customEmailHandler.checkCode.loading
 );

@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Credentials} from '@xtream/firebase-ngrx-user-management';
-import {Router} from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Credentials } from "../../../../../projects/xtream/firebase-ngrx-user-management/src/public_api";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
@@ -20,12 +20,11 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
-      rememberMe: new FormControl(true)
+      rememberMe: new FormControl(true),
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login(): void {
     this.error = null;
