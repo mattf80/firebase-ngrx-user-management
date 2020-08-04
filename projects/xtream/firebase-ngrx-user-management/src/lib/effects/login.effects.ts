@@ -14,6 +14,8 @@ import {
   withLatestFrom,
   concatMapTo,
   flatMap,
+  concatMap,
+  mergeMap,
 } from "rxjs/operators";
 import * as userActions from "../actions/auth.actions";
 import { from, Observable, of, zip, combineLatest } from "rxjs";
@@ -146,13 +148,8 @@ export class LoginEffects {
   logout: Observable<Action> = this.actions$.pipe(
     ofType(userActions.AuthActionTypes.Logout),
     map((action: userActions.Logout) => action.payload),
-    exhaustMap((payload) => {
-      return from(this.afAuth.signOut());
-    }),
-    map((authData) => {
-      console.log("logout effect");
-      return new userActions.NotAuthenticated();
-    })
+    exhaustMap(() => from(this.afAuth.signOut())),
+    concatMapTo([resetClaims(), new userActions.NotAuthenticated()])
   );
 
   @Effect()
